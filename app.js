@@ -1,13 +1,21 @@
+const morgan = require('morgan');
+const helmet = require('helmet');
 const Joi = require('@hapi/joi');
 const logger = require('./middleware/logger');
 const auth = require('./middleware/authenticate');
 const express = require('express');
 const app = express();
 
+// built-in middleware
 app.use(express.json()); // req.body
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
+// Third-party middleware
+app.use(helmet());
+app.use(morgan('tiny'));
+
+// custom middleware
 app.use(logger);
 app.use(auth);
 
