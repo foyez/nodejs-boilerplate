@@ -12,8 +12,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 // Third-party middleware
+if (process.env.NODE_ENV !== 'production') {
+  app.use(morgan('tiny'));
+  console.log('Morgan enabled...');
+}
+// app.get('env') === 'development' && app.use(morgan('tiny'));
 app.use(helmet());
-app.use(morgan('tiny'));
 
 // custom middleware
 app.use(logger);
