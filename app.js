@@ -1,3 +1,4 @@
+const config = require('config');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const Joi = require('@hapi/joi');
@@ -22,6 +23,11 @@ app.use(helmet());
 // custom middleware
 app.use(logger);
 app.use(auth);
+
+// Configuration
+console.log('Application Name: ', config.get('name'));
+console.log('Mail Server: ', config.get('mail.host'));
+console.log('Mail Password: ', config.get('mail.password'));
 
 const courses = [
   { id: 1, name: 'Course 1' },
