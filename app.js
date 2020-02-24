@@ -1,3 +1,4 @@
+const debug = require('debug')('app:startup');
 const config = require('config');
 const morgan = require('morgan');
 const helmet = require('helmet');
@@ -15,7 +16,7 @@ app.use(express.static('public'));
 // Third-party middleware
 if (process.env.NODE_ENV !== 'production') {
   app.use(morgan('tiny'));
-  console.log('Morgan enabled...');
+  debug('Morgan enabled...');
 }
 // app.get('env') === 'development' && app.use(morgan('tiny'));
 app.use(helmet());
