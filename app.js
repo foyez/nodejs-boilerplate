@@ -9,6 +9,10 @@ const homeRoutes = require('./routes/home');
 const express = require('express');
 const app = express();
 
+// TEMPLATE ENGINE SETUP
+app.set('view engine', 'pug');
+app.set('views', './views'); // default
+
 // built-in middleware
 app.use(express.json()); // req.body
 app.use(express.urlencoded({ extended: true }));
