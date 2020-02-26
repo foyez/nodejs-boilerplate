@@ -6,6 +6,8 @@ const logger = require('./middleware/logger');
 const auth = require('./middleware/authenticate');
 const coursesRoutes = require('./routes/courses');
 const homeRoutes = require('./routes/home');
+const sequelize = require('./db');
+require('./models/Course');
 const express = require('express');
 const app = express();
 
@@ -35,7 +37,19 @@ app.use('/', homeRoutes);
 // Configuration
 console.log('Application Name: ', config.get('name'));
 console.log('Mail Server: ', config.get('mail.host'));
-console.log('Mail Password: ', config.get('mail.password'));
+// console.log('Mail Password: ', config.get('mail.password'));
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Server is running in ${port} port...`));
+
+sequelize
+  // .sync({ force: true })
+  .sync()
+  .then(() => {
+    const server = app.listen(port, () => {
+      console.log('Your app is listening on port ' + server.address().port);
+    });
+  })
+  .catch(err => {
+    console.log(err);
+    console.log('DB has not been connected.');
+  });
